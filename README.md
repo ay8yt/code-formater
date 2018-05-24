@@ -67,8 +67,8 @@
 
 ## 这是原始页面的效果
 
-	![avatar](http://www.miaodongketang.cn/images/code-formater/before.png)
+![avatar](http://www.miaodongketang.cn/images/code-formater/before.png)
 
 ## 这是美化后的效果
 
-	![avatar](http://www.miaodongketang.cn/images/code-formater/after.png)
+![avatar](http://www.miaodongketang.cn/images/code-formater/after.png)
