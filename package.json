@@ -1,6 +1,6 @@
 {
-  "name": "code-formater",
-  "version": "0.1.0",
+  "name": "pagecode-formater",
+  "version": "1.0.3",
   "description": "",
   "url": "",
   "keywords": [
@@ -13,20 +13,14 @@
   "bugs": {
     "url": ""
   },
-  "main": "./src/app",
-  "scripts": {
-    
-  },
+  "main": "./index.js",
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ay8yt/code-formater.git"
   },
   "dependencies": {
     "line-reader": "^0.4.0"
   },
-  "devDependencies": {
-    "mocha": "^2.4.5"
-  },
-  "_from": "line-reader@0.4.0",
-  "_resolved": "http://registry.npm.taobao.org/line-reader/download/line-reader-0.4.0.tgz"
+  "devDependencies": {}
 }

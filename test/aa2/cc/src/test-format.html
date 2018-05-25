@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>测试</title>
+	</head>
+
+	<body>
+<code-format>
+	    		<table style="background: #3f3f3f; cellspacing:0; color:white; font-family: Consolas; padding: 2px 40px 2px 15px; border-radius: 4px;">
+	    			<tr><td><p style="margin:5px 0;"><font style="color:#F92672">new</font> <font style="color:#66D9EF">Promise</font>(函数1(<font style="color:#FD971F">resolve</font>){</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;ajaxA(<font style="color:#E6DB74">"xxxx"</font>, <font style="color:#66D9EF">function</font>(){</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(); <font style="color:#807B66">//通知<font style="color:#66D9EF">Promise</font>该任务结束</p><p style="margin:5px 0;"></font>&nbsp;&nbsp;&nbsp;&nbsp;})    </p><p style="margin:5px 0;">}).<font style="color:#66D9EF">then</font>(函数2(){</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#807B66">//在函数2开始运行后，第一次创建的<font style="color:#66D9EF">Promise</font>对象完成使命，已经不能再继续工作。</p><p style="margin:5px 0;"></font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#807B66">//此时，我们创建并返回了新的<font style="color:#66D9EF">Promise</font>对象</p><p style="margin:5px 0;"></font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#F92672">return</font> <font style="color:#F92672">new</font> <font style="color:#66D9EF">Promise</font>(<font style="color:#66D9EF">function</font>(<font style="color:#FD971F">resolve</font>){</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ajaxB(<font style="color:#E6DB74">"xxxx"</font>, <font style="color:#66D9EF">function</font>(){</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(); <font style="color:#807B66">//通知新的<font style="color:#66D9EF">Promise</font>对象该任务结束</p><p style="margin:5px 0;"></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})    </p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;})</p><p style="margin:5px 0;">}).<font style="color:#66D9EF">then</font>(函数3(){ <font style="color:#807B66">//尽管这里使用了链式调用，但负责执行函数3的，已经是新的<font style="color:#66D9EF">Promise</font>对象了</p><p style="margin:5px 0;"></font>      </p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#807B66">// 如果，我们还有ajaxD需要顺序调用</p><p style="margin:5px 0;"></font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#807B66">// 那就必须在这里重新<font style="color:#F92672">new</font> <font style="color:#66D9EF">Promise</font>()对象了</p><p style="margin:5px 0;"></font>&nbsp;&nbsp;&nbsp;&nbsp;ajaxC(<font style="color:#E6DB74">"xxx"</font>, <font style="color:#66D9EF">function</font>(){     })</p><p style="margin:5px 0;">})  </p></td></tr>
+	    		</table>
+	    	</code-format>
+<div>
+	<p><span>cccccccc</span></p>
+</div>
+<code-format>
+	    		<table style="background: #3f3f3f; cellspacing:0; color:white; font-family: Consolas; padding: 2px 40px 2px 15px; border-radius: 4px;">
+	    			<tr><td><p style="margin:5px 0;"><font style="color:#66D9EF">let</font> a1<font style="color:#F92672">  =  </font>10;</p><p style="margin:5px 0;"><font style="color:#66D9EF">var</font> b2<font style="color:#F92672">  =  </font>99;</p><p style="margin:5px 0;"><font style="color:#F92672">if</font>(a1<font style="color:#F92672">  >  </font>20) {</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;console.log(<font style="color:#FD971F">b2</font>);</p><p style="margin:5px 0;">} <font style="color:#F92672">else</font> <font style="color:#F92672">if</font>(b2<font style="color:#F92672">  ==  </font>99){</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;console.log(<font style="color:#E6DB74">"abc"</font>);</p><p style="margin:5px 0;">}</p><p style="margin:5px 0;"><font style="color:#F92672">for</font>(<font style="color:#66D9EF">let</font> i<font style="color:#F92672">  =  </font>0; i<font style="color:#F92672">  <  </font>99; i<font style="color:#F92672"> ++ </font>) {</p><p style="margin:5px 0;">&nbsp;&nbsp;&nbsp;&nbsp;</p><p style="margin:5px 0;">}</p><p style="margin:5px 0;"></p></td></tr>
+	    		</table>
+	    	</code-format>
+
+	</body>
+	
+	<script></script>	
+</html>
+
+<script></script>

@@ -1,5 +1,10 @@
 
-const codeformat = require("../src/app.js");
-const path = require("path");
+const codeformat = require("../index.js");
+const path = require('path');
 
-codeformat(path.join( __dirname, "test.html"));
+// console.log(path.basename('xxxx/index.html'))
+
+codeformat(
+	path.join(__dirname),
+	true //递归
+);

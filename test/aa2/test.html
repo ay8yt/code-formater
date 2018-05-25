@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>测试</title>
+	</head>
+
+	<body>
+<code-format>
+new Promise(函数1(resolve){
+	ajaxA("xxxx", function(){
+		resolve(); //通知Promise该任务结束
+	})    
+}).then(函数2(){
+	//在函数2开始运行后，第一次创建的Promise对象完成使命，已经不能再继续工作。
+	//此时，我们创建并返回了新的Promise对象
+	return new Promise(function(resolve){
+		ajaxB("xxxx", function(){
+			resolve(); //通知新的Promise对象该任务结束
+		})    
+	})
+}).then(函数3(){ //尽管这里使用了链式调用，但负责执行函数3的，已经是新的Promise对象了
+      
+	// 如果，我们还有ajaxD需要顺序调用
+	// 那就必须在这里重新new Promise()对象了
+	ajaxC("xxx", function(){     })
+})  
+</code-format>
+<div>
+	<p><span>cccccccc</span></p>
+</div>
+<code-format>
+let a1 = 10;
+var b2 = 99;
+if(a1 > 20) {
+	console.log(b2);
+} else if(b2 == 99){
+	console.log("abc");
+}
+for(let i = 0; i < 99; i++) {
+	
+}
+
+</code-format>
+
+	</body>
+	
+	<script></script>	
+</html>
+
+<script></script>

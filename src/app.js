@@ -7,47 +7,93 @@ const symbolMapping = require('./symbol-mapping.js');
 
 require('colors');
 
-module.exports = function(filepath){
-	// console.log(filepath);
-	fs.readFile(filepath, (drr, filedata) => {
-        let totalString = filedata.toString();
-// console.log(totalString);
-        //读取所有code-format代码块
-        let codeChunks = getCodeChunks(totalString);
+// const readdir = promisify(fs.readdir);
+// const readfile = promisify(fs.readFile);
 
-// console.log(codeChunks);
+function format4batch(dirname, isrecursion, extname=".html") {
+	if( !fs.existsSync(dirname) ) return;
 
-        //处理过的代码块
-        let colorfulCodeChunks = {};
+	if(!isrecursion) { //如果不需要递归
+		let files = fs.readdirSync(dirname); //读取文件夹的文件列表
+	    
+	    if(!files || files.length==0) return; //如果是空文件夹，直接返回
+	    
+	    files.forEach(filename => {
+	    	let filepath = path.join(dirname, filename);
+	    	let state = fs.stat(filepath, (err, state) => {
+	    		if(state.isFile() && filename.endsWith(extname))  {
+	    			format4single(path.join(dirname, filename));  //处理单个文件
+	    		}
+	    	})
+	    })
+	} else { //需要递归
+		let filepaths = []; //所有文件路径
+		
+		function children(_dirname) {
+			let files = fs.readdirSync(_dirname); //读取文件夹的文件列表
+			
+			if(!files || files.length==0) return;
 
-        new Promise(async (resolve, reject)=>{
-        	for(let index in codeChunks){
-        		codestr = codeChunks[index];
-	        	//代码上色
-	        	codestr = colorful(codestr);
-// console.log(codestr)
-	        	//清除第一个换行，将tab键替换为4个空格
-				codestr = codestr.replace(/^(\r)?\n/, '').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;');        	
-				//为每一行代码包裹P标签,和表格
-				codestr = await lineable(codestr);
-				//保存
-				colorfulCodeChunks[index] = codestr;
+			files.forEach(filename => {
+				let filepath = path.join(_dirname, filename);
+	    		let state = fs.statSync(filepath);
+	    		if(state.isFile() && filename.endsWith(extname))  {
+	    			filepaths.push(filepath);
+	    		}
+	    		if(state.isDirectory()) children(filepath);
+			})
+		}
+		children(dirname);
+		console.log(filepaths);
 
-				if(Object.keys(colorfulCodeChunks).length == Object.keys(codeChunks).length) {
-					console.log(Object.keys(colorfulCodeChunks).length , Object.keys(codeChunks).length)
-					resolve();
-				}
-        	}
-        })
-        .then(() => {
-			//替换整体内容，写入新文件
-			let finalstr = totalString;
-			for(let index in colorfulCodeChunks) {
-				codestr = colorfulCodeChunks[index];
-				finalstr = finalstr.replace(codeChunks[index], codestr);
+		filepaths.forEach( filepath => {
+			format4single(filepath);
+		})
+	}
+}
+
+
+
+function format4single(filepath){
+	
+	if( !fs.existsSync(filepath) ) return;
+
+	let filedata = fs.readFileSync(filepath, "utf8")
+
+    let totalString = filedata.toString();
+    //读取所有code-format代码块
+    let codeChunks = getCodeChunks(totalString);
+
+    //处理过的代码块
+    let colorfulCodeChunks = {};
+
+    new Promise(async (resolve, reject)=>{
+    	for(let index in codeChunks){
+    		codestr = codeChunks[index];
+        	//代码上色
+        	codestr = colorful(codestr);
+        	//清除第一个换行，将tab键替换为4个空格
+			codestr = codestr.replace(/^(\r)?\n/, '').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;');        	
+			//为每一行代码包裹P标签,和表格
+			codestr = await lineable(codestr);
+			//保存
+			colorfulCodeChunks[index] = codestr;
+
+			if(Object.keys(colorfulCodeChunks).length == Object.keys(codeChunks).length) {
+				//当所有代码块处理完成
+				resolve();
 			}
-        	createFile( filepath, finalstr);
-        })
+    	}
+    })
+    .then(() => {
+		//替换整体内容，写入新文件
+		let finalstr = totalString;
+		for(let index in colorfulCodeChunks) {
+			codestr = colorfulCodeChunks[index];
+			finalstr = finalstr.replace(codeChunks[index], codestr);
+		}
+    	createFile( filepath, finalstr);
+    	console.log(`完成文件${filepath}的处理`);
     })
 }
 
@@ -100,7 +146,12 @@ function lineable(data){
 }
 
 function createFile(filepath, data){
-
 	fs.writeFileSync( path.join(path.dirname(filepath),  path.basename(filepath,".html")+"-format"+path.extname(filepath) ) , data);
 }
 
+
+
+module.exports = {
+	format4single,
+	format4batch
+}
