@@ -23,6 +23,7 @@ let Utils = {
 		})
 		return results;
 	},
+	//递归获取所有的文件，如果指定文件名称，则筛选出来
 	getChildFiles() {
 
 	}
